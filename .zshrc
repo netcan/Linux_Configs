@@ -17,7 +17,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon background_jobs context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time battery ip load ram vi_mode)
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-POWERLEVEL9K_TIME_FORMAT='\uf017 %D{%H:%M:%S}'
+POWERLEVEL9K_TIME_FORMAT='\uf017 %D{%H:%M}'
 
 # POWERLEVEL9K_SHOW_CHANGESET=true
 # POWERLEVEL9K_HOME_ICON='\uf015'
@@ -95,13 +95,14 @@ plugins=(git colored-man command-not-found zsh-syntax-highlighting autojump extr
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/mipseltools-gcc412-lnx26/bin:/opt/Point/PointDownload:/opt/Point/PopupWindow:/home/netcan/.local/bin":$PATH
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/netcan/.local/bin:/opt/cxoffice/bin:/opt/Qt5.8.0/Tools/QtCreator/bin/":$PATH
+
 source ~/.oh-my-zsh/custom/plugins/incr-0.2.zsh
 source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-eval `dircolors ~/.dir_colors/dircolors`
+# eval `dircolors ~/.dir_colors/dircolors`
 
 
 # You may need to manually set your language environment
