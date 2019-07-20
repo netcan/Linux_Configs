@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
+" Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
@@ -10,6 +11,15 @@ Plug 'junegunn/vim-easy-align'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
+Plug 'airblade/vim-gitgutter'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-surround'
+" highlight for :substitude
+Plug 'markonm/traces.vim'
+" Make the yanked region apparent!
+Plug 'machakann/vim-highlightedyank'
+
 " 自动分号补全
 Plug 'Raimondi/delimitMate'
 " 书签增强
@@ -37,31 +47,34 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set cursorline cursorcolumn
-autocmd InsertLeave,WinEnter * set cursorline cursorcolumn
-autocmd InsertEnter,WinLeave * set nocursorline nocursorcolumn
+augroup cursor_position
+    autocmd!
+    autocmd InsertLeave,WinEnter * set cursorline cursorcolumn
+    autocmd InsertEnter,WinLeave * set nocursorline nocursorcolumn
+augroup END
 set hidden
 set incsearch ignorecase smartcase
-set background=dark
-colorscheme gruvbox
-
+" color dracula
 "}
 
 " gruvbox {
-let g:gruvbox_italic = 1
-let g:gruvbox_constrast_dark='hard'
-let g:gruvbox_undercurl = 1
-let g:gruvbox_termcolors = 256
-let g:gruvbox_underline=1
+set background=dark
+let g:gruvbox_italic         = 1
+let g:gruvbox_contrast_light = 'soft'
+let g:gruvbox_contrast_dark  = 'soft'
+let g:gruvbox_undercurl      = 1
+let g:gruvbox_termcolors     = 256
+let g:gruvbox_underline      = 1
+color gruvbox
 " }
 
 " custom keymap {
-noremap <silent><leader>n :NERDTreeToggle<CR>
 noremap j jzz
 noremap k kzz
 "noremap <BS> <C-w>h
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k 
+noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 nnoremap <silent> <leader>= :exe "resize" . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <leader>- :exe "resize" . (winheight(0) * 2/3)<CR>
@@ -79,10 +92,18 @@ noremap <silent> <leader>g :b#<CR>
 noremap <silent> <leader>t :enew<CR>
 noremap <silent> <leader>x :bd<CR>
 noremap ; :
+noremap / /\v
 
 " 保持选择
 xnoremap < <gv
 xnoremap > >gv
+" }
+
+" nerdtree {
+noremap <silent><leader>n :NERDTreeToggle<CR>
+augroup cursor_position
+    autocmd BufEnter NERD_tree_* set cursorline nocursorcolumn
+augroup END
 " }
 
 " airline {
@@ -108,10 +129,10 @@ nmap ga <Plug>(EasyAlign)
 
 " easymotion {
 let EasyMotion_smartcase=1
-nmap <leader><leader>h <Plug>(easymotion-h)
+nmap F <Plug>(easymotion-Fl)
 nmap <leader><leader>j <Plug>(easymotion-j)
 nmap <leader><leader>k <Plug>(easymotion-k)
-nmap <leader><leader>l <Plug>(easymotion-l)
+nmap f <Plug>(easymotion-fl)
 nmap <leader><leader>s <Plug>(easymotion-overwin-f)
 " }
 
@@ -129,7 +150,7 @@ set nowritebackup
 " Better display for messages
 set cmdheight=2
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=500
+set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " always show signcolumns
@@ -144,8 +165,11 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 
 " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-" autocmd CursorHold * silent call CocActionAsync('showSignatureHelp')
+augroup highlight_symbol
+    autocmd!
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd CursorHold * silent call CocActionAsync('showSignatureHelp')
+augroup END
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -158,8 +182,8 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 nnoremap <silent> <leader>o  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <leader>l  :<C-u>CocList<cr>
 " Remap keys for gotos
-nmap <silent> jd <Plug>(coc-definition)
-nmap <silent> jr <Plug>(coc-references)
+nmap <silent> <leader>jd <Plug>(coc-definition)
+nmap <silent> <leader>jr <Plug>(coc-references)
 " }
 
 " vim-ccls {
@@ -171,5 +195,12 @@ nmap <silent><leader>jH :CclsCalleeHierarchy<cr>
 nmap <silent><leader>jm :CclsMemberHierarchy<cr>
 nmap <silent><leader>jb :CclsDerivedHierarchy<cr>
 nmap <silent><leader>jB :CclsBaseHierarchy<cr>
+" }
 
+" vim-trailing-whitespace {
+nnoremap <silent><leader><space> :FixWhitespace<cr>
+" }
+
+" vim-highlightedyank {
+let g:highlightedyank_highlight_duration = 350
 " }
