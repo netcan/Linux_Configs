@@ -4,27 +4,28 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-easy-align'
-Plug 'vim-ctrlspace/vim-ctrlspace'
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-surround'
 " highlight for :substitude
 Plug 'markonm/traces.vim'
 " Make the yanked region apparent!
 Plug 'machakann/vim-highlightedyank'
+Plug 'ryanoasis/vim-devicons'
 
 " 自动分号补全
 Plug 'Raimondi/delimitMate'
 " 书签增强
 Plug 'kshenoy/vim-signature'
-Plug 'luochen1990/rainbow'
+Plug 'junegunn/rainbow_parentheses.vim'
 " 语法包
 Plug 'sheerun/vim-polyglot'
 " lsp
@@ -39,14 +40,15 @@ call plug#end()
 syntax enable
 let $LANG = 'en_US'
 let mapleader = ','
-set nu rnu
-set ts=4 et sw=4 sta
-set hls
-set nocp
+set number relativenumber
+set tabstop=4 expandtab shiftwidth=4 smarttab shiftround
+set hlsearch
+set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set cursorline cursorcolumn
+set showmatch matchtime=1
 augroup cursor_position
     autocmd!
     autocmd InsertLeave,WinEnter * set cursorline cursorcolumn
@@ -55,6 +57,10 @@ augroup END
 set hidden
 set incsearch ignorecase smartcase
 " color dracula
+
+augroup filetype_cmd
+    autocmd!
+augroup END
 "}
 
 " gruvbox {
@@ -69,8 +75,8 @@ color gruvbox
 " }
 
 " custom keymap {
-noremap j jzz
-noremap k kzz
+nnoremap j jzz
+nnoremap k kzz
 "noremap <BS> <C-w>h
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -84,10 +90,10 @@ noremap <silent><F4> :set wrap!<CR>
 noremap <silent><F9> :TagbarToggle<CR>
 inoremap jk <esc>
 set mouse-=a
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
+noremap <up>     <nop>
+noremap <down>   <nop>
+noremap <left>   <nop>
+noremap <right>  <nop>
 noremap <silent> <leader>g :b#<CR>
 noremap <silent> <leader>t :enew<CR>
 noremap <silent> <leader>x :bd<CR>
@@ -95,15 +101,24 @@ noremap ; :
 noremap / /\v
 
 " 保持选择
-xnoremap < <gv
-xnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 " }
 
 " nerdtree {
-noremap <silent><leader>n :NERDTreeToggle<CR>
+nnoremap <silent><leader>n :NERDTreeToggle<CR>
 augroup cursor_position
     autocmd BufEnter NERD_tree_* set cursorline nocursorcolumn
 augroup END
+" }
+
+" vim-nerdtree-syntax-highlight {
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName    = 1
+let g:NERDTreePatternMatchHighlightFullName  = 1
+let g:NERDTreeHighlightFolders               = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName       = 1 " highlights the folder name
+let g:NERDTreeHighlightCursorline            = 0
 " }
 
 " airline {
@@ -115,9 +130,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:NERDSpaceDelims = 1
 " }
 
+" rainbow_parentheses {
+augroup rainbow_enable
+    autocmd!
+    autocmd VimEnter * RainbowParentheses
+augroup END
+" }
+
 " ctrlspace {
-nnoremap <silent> <C-p> :CtrlSpace O<CR>
-let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+" nnoremap <silent> <C-p> :CtrlSpace O<CR>
+" let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 " }
 
 " easy align {
@@ -136,10 +158,6 @@ nmap f <Plug>(easymotion-fl)
 nmap <leader><leader>s <Plug>(easymotion-overwin-f)
 " }
 
-" rainbow {
-let g:rainbow_active = 1
-" }
-
 " coc.nvim {
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -153,8 +171,8 @@ set cmdheight=2
 set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
+" auto show signcolumns
+set signcolumn=auto
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use `[c` and `]c` to navigate diagnostics
@@ -179,8 +197,11 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Search workspace symbols
-nnoremap <silent> <leader>o  :<C-u>CocList -I symbols<cr>
-nnoremap <silent> <leader>l  :<C-u>CocList<cr>
+nnoremap <silent> <leader>l  :CocList<cr>
+nnoremap <silent> <leader>o  :CocList -I symbols<cr>
+nnoremap <silent> <leader>f  :CocList --normal files<cr>
+nnoremap <silent> <leader>rg  :CocList grep<cr>
+nnoremap <silent> <C-space>  :CocList --normal buffers<cr>
 " Remap keys for gotos
 nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jr <Plug>(coc-references)
@@ -190,11 +211,14 @@ nmap <silent> <leader>jr <Plug>(coc-references)
 let g:ccls_size=10
 let g:ccls_position='botright'
 let g:ccls_orientation='horizontal'
-nmap <silent><leader>jh :CclsCallHierarchy<cr>
-nmap <silent><leader>jH :CclsCalleeHierarchy<cr>
-nmap <silent><leader>jm :CclsMemberHierarchy<cr>
-nmap <silent><leader>jb :CclsDerivedHierarchy<cr>
-nmap <silent><leader>jB :CclsBaseHierarchy<cr>
+nnoremap <silent><leader>jh :CclsCallHierarchy<cr>
+nnoremap <silent><leader>jH :CclsCalleeHierarchy<cr>
+nnoremap <silent><leader>jm :CclsMemberHierarchy<cr>
+nnoremap <silent><leader>jb :CclsDerivedHierarchy<cr>
+nnoremap <silent><leader>jB :CclsBaseHierarchy<cr>
+augroup filetype_cmd
+    autocmd FileType yggdrasil setlocal nonumber norelativenumber
+augroup END
 " }
 
 " vim-trailing-whitespace {
