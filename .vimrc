@@ -1,5 +1,5 @@
 call plug#begin('~/.vim/plugged')
-Plug 'gruvbox-community/gruvbox'
+Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -29,7 +29,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 " 语法包
 Plug 'sheerun/vim-polyglot'
 " lsp
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'm-pilia/vim-ccls'
 " rust
@@ -56,22 +56,51 @@ augroup cursor_position
 augroup END
 set hidden
 set incsearch ignorecase smartcase
-" color dracula
 
+set ttimeoutlen=50
 augroup filetype_cmd
     autocmd!
 augroup END
 "}
 
 " gruvbox {
-set background=dark
 let g:gruvbox_italic         = 1
 let g:gruvbox_contrast_light = 'soft'
-let g:gruvbox_contrast_dark  = 'soft'
+let g:gruvbox_contrast_dark  = 'medium'
 let g:gruvbox_undercurl      = 1
 let g:gruvbox_termcolors     = 256
 let g:gruvbox_underline      = 1
-color gruvbox
+" }
+
+" OceanicNext {
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+" }
+
+" PaperColor {
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 0,
+  \       'allow_bold': 1,
+  \       'allow_italic': 1,
+  \     }
+  \   },
+  \   'language': {
+  \     'cpp': {
+  \       'highlight_standard_library': 1
+  \     },
+  \     'c': {
+  \       'highlight_builtins' : 1
+  \     }
+  \   }
+  \ }
+" }
+
+" theme {
+set background=dark
+set termguicolors
+color PaperColor
 " }
 
 " custom keymap {

@@ -4,7 +4,7 @@
             "command": "ccls",
             "args": ["--log-file=/tmp/ccls.log"],
             "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            "rootPatterns": [".ccls", "compile_commands.json"],
             "initializationOptions": {
                 "cache": {
                     "directory": "/tmp/ccls-cache",
@@ -12,11 +12,17 @@
                 },
                 "highlight": {
                     "lsRanges": true
+                },
+                "clang": {
+                    "extraArgs": [
+                        "-isystem", "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include",
+                        "-isystem", "/Library/Developer/CommandLineTools/usr/include/c++/v1/"
+                    ]
                 }
             }
         }
     },
     "diagnostic": {
-        "warningSign": "--",
+        "warningSign": "--"
     }
 }
