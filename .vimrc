@@ -6,10 +6,11 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'terryma/vim-multiple-cursors'
+
+" multiple cursor
+Plug 'mg979/vim-visual-multi'
+
 Plug 'majutsushi/tagbar'
-Plug 'junegunn/vim-easy-align'
-" Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
@@ -34,6 +35,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'm-pilia/vim-ccls'
 " rust
 Plug 'rust-lang/rust.vim'
+
 call plug#end()
 
 " general {
@@ -228,12 +230,38 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Search workspace symbols
 nnoremap <silent> <leader>l  :CocList<cr>
 nnoremap <silent> <leader>o  :CocList -I symbols<cr>
-nnoremap <silent> <leader>f  :CocList --normal files<cr>
+nnoremap <silent> <leader>f  :CocList files<cr>
 nnoremap <silent> <leader>rg  :CocList grep<cr>
 nnoremap <silent> <C-space>  :CocList --normal buffers<cr>
 " Remap keys for gotos
 nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jr <Plug>(coc-references)
+" }
+
+" coc-snippets {
+" Use <Tab> for select text for visual placeholder of snippet.
+vmap <tab> <Plug>(coc-snippets-select)
+
+" Use <C-s> for both expand and jump (make expand higher priority.)
+imap <C-s> <Plug>(coc-snippets-expand-jump)
+
+" Use Tab for expand snippet
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+let g:coc_snippet_next = '<tab>'
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
 " }
 
 " vim-ccls {

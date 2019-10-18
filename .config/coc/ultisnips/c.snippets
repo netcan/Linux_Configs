@@ -1,0 +1,56 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet copyright "copyright info" b
+/*************************************************************************
+	> File Name: `!p snip.rv = fn`
+	> Author: Netcan
+	> Blog: http://www.netcan666.com
+	> Mail: 1469709759@qq.com
+	> Created Time: `date +"%Y-%m-%d %H:%M"`
+************************************************************************/
+$0
+endsnippet
+
+snippet main "main function" b
+int main(int argc, char** argv) {
+	$0
+	return 0;
+}
+endsnippet
+
+snippet #if "#if GUARD" b
+#ifndef __${1:GUARD}__
+#define __$1__
+$0
+#endif
+endsnippet
+
+snippet fori "for loop i" b
+for (int ${1:i} = 0; $1 < ${2:count}; ++$1) {
+	$0
+}
+endsnippet
