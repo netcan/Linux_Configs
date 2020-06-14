@@ -218,8 +218,8 @@ nnoremap <silent> K :call CocAction('doHover')<CR>
 " Highlight symbol under cursor on CursorHold
 augroup highlight_symbol
     autocmd!
-"    autocmd CursorHold * silent call CocActionAsync('highlight')
-"    autocmd CursorHold * silent call CocActionAsync('showSignatureHelp')
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd CursorHold * silent call CocActionAsync('showSignatureHelp')
 augroup END
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)

@@ -1,0 +1,20 @@
+{
+  "lists": {
+    "%2Fhome%2Fnetcan": [
+      "ex"
+    ],
+    "%2Fhome%2Fnetcan%2FWorkspace%2FMyConfigs%2F": {
+      "config%2Fcoc": [
+        "e",
+        "ex"
+      ]
+    }
+  },
+  "extensions": {
+    "%2Fhome%2Fnetcan%2FWorkspace%2FMyConfigs%2F": {
+      "config%2Fcoc": [
+        "ls"
+      ]
+    }
+  }
+}
