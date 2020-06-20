@@ -94,5 +94,6 @@
     },
     "diagnostic": {
         "warningSign": "--"
-    }
+    },
+    "rust-analyzer.serverPath": "/Users/netcan/.local/bin/rust-analyzer"
 }

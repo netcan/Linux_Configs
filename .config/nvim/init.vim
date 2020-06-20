@@ -238,15 +238,11 @@ nnoremap <silent> <C-space>  :CocList --normal buffers<cr>
 " Remap keys for gotos
 nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jr <Plug>(coc-references)
+
+highlight link CocRustChainingHint CocCodeLens
 " }
 
 " coc-snippets {
-" Use <Tab> for select text for visual placeholder of snippet.
-vmap <tab> <Plug>(coc-snippets-select)
-
-" Use <C-s> for both expand and jump (make expand higher priority.)
-imap <C-s> <Plug>(coc-snippets-expand-jump)
-
 " Use Tab for expand snippet
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -258,8 +254,11 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-let g:coc_snippet_next = '<tab>'
 
+" Use <Tab> for select text for visual placeholder of snippet.
+vnoremap <tab> <Plug>(coc-snippets-select)
+" Use <C-s> for both expand and jump (make expand higher priority.)
+imap <C-s> <Plug>(coc-snippets-expand-jump)
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
