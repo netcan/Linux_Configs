@@ -30,5 +30,6 @@
     "python.linting.enabled": false,
     "diagnostic": {
         "warningSign": "--"
-    }
+    },
+    "rust-analyzer.serverPath": "/Users/netcan/.local/bin/rust-analyzer"
 }
