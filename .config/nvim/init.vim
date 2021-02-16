@@ -115,6 +115,7 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+nnoremap <silent> <leader>y "+y
 nnoremap <silent> <leader>= :exe "resize" . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <leader>- :exe "resize" . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <leader>0 :exe "vertical resize" . (winwidth(0) * 3/2)<CR>
@@ -137,6 +138,12 @@ noremap / /\v
 vnoremap < <gv
 vnoremap > >gv
 " }
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
 
 " nerdtree {
 nnoremap <silent><leader>n :NERDTreeToggle<CR>

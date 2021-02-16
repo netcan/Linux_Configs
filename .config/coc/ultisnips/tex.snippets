@@ -24,33 +24,22 @@
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-snippet copyright "copyright info" b
-/*************************************************************************
-	> File Name: `!p snip.rv = fn`
-	> Author: Netcan
-	> Blog: https://netcan.github.io/
-	> Mail: 1469709759@qq.com
-	> Created Time: `date +"%Y-%m-%d %H:%M"`
-************************************************************************/
+snippet figure "insert figure" b
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{$2}
+	\caption{$1}
+\end{figure}
+endsnippet
+
+snippet begin "insert begin" b
+\begin{$1}
 $0
+\end{$1}
 endsnippet
 
-snippet main "main function" b
-int main(int argc, char** argv) {
-	$0
-	return 0;
-}
-endsnippet
-
-snippet #if "#if GUARD" b
-#ifndef __${1:GUARD}__
-#define __$1__
+snippet lstlisting "insert code" b
+\begin{lstlisting}
 $0
-#endif
-endsnippet
-
-snippet fori "for loop i" b
-for (int ${1:i} = 0; $1 < ${2:count}; ++$1) {
-	$0
-}
+\end{lstlisting}
 endsnippet
