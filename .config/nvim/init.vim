@@ -7,7 +7,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " multiple cursor
 Plug 'mg979/vim-visual-multi'
@@ -15,7 +15,6 @@ Plug 'mg979/vim-visual-multi'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
-Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-surround'
 " highlight for :substitude
@@ -37,6 +36,26 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'm-pilia/vim-ccls'
 " rust
 Plug 'rust-lang/rust.vim'
+
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" fuzzy search
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+
+" highlight words
+Plug 'lfv89/vim-interestingwords'
+
+" buffer manager
+Plug 'bagrat/vim-buffet'
+
+" underscore to camelcase
+Plug 'tpope/vim-abolish'
+
+" diff
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'AndrewRadev/linediff.vim'
 
 call plug#end()
 
@@ -108,18 +127,18 @@ color PaperColor
 " }
 
 " custom keymap {
-nnoremap j jzz
-nnoremap k kzz
+nnoremap <silent> j jzz
+nnoremap <silent> k kzz
 "noremap <BS> <C-w>h
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
-nnoremap <silent> <leader>y "+y
 nnoremap <silent> <leader>= :exe "resize" . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <leader>- :exe "resize" . (winheight(0) * 2/3)<CR>
-nnoremap <silent> <leader>0 :exe "vertical resize" . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> <leader>9 :exe "vertical resize" . (winwidth(0) * 2/3)<CR>
+" nnoremap <silent> <leader>0 :exe "vertical resize" . (winwidth(0) * 3/2)<CR>
+" nnoremap <silent> <leader>9 :exe "vertical resize" . (winwidth(0) * 2/3)<CR>
+noremap <silent><F3> :set relativenumber! number! list! lcs=tab:..<CR>
 noremap <silent><F4> :set wrap!<CR>
 noremap <silent><F9> :TagbarToggle<CR>
 inoremap jk <esc>
@@ -128,22 +147,35 @@ noremap <up>     <nop>
 noremap <down>   <nop>
 noremap <left>   <nop>
 noremap <right>  <nop>
-noremap <silent> <leader>g :b#<CR>
-noremap <silent> <leader>t :enew<CR>
-noremap <silent> <leader>x :bd<CR>
+" noremap <silent> <leader>g :b#<CR>
+" noremap <silent> <leader>t :enew<CR>
+" noremap <silent> <leader>x :bd<CR>
 noremap ; :
 noremap / /\v
 
 " 保持选择
 vnoremap < <gv
 vnoremap > >gv
+
+" command mode key map
+cnoremap <c-a> <c-b>
+cnoremap <c-b> <left>
+cnoremap <c-f> <right>
+
+" copy paste
+nnoremap <silent> <leader>y "+y
+nnoremap <silent> <leader>p "+p
+
 " }
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+augroup savepos
+    autocmd!
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+augroup END
 
 " nerdtree {
 nnoremap <silent><leader>n :NERDTreeToggle<CR>
@@ -163,7 +195,7 @@ let g:NERDTreeHighlightCursorline            = 0
 
 " airline {
 let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 " }
 
 " nerdcommenter {
@@ -184,9 +216,9 @@ augroup END
 
 " easy align {
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-vmap ga <Plug>(EasyAlign)
+" vmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" nmap ga <Plug>(EasyAlign)
 " }
 
 " easymotion {
@@ -196,6 +228,16 @@ nmap <leader><leader>j <Plug>(easymotion-j)
 nmap <leader><leader>k <Plug>(easymotion-k)
 nmap f <Plug>(easymotion-fl)
 nmap <leader><leader>s <Plug>(easymotion-overwin-f)
+" }
+
+" vim-clap {
+nnoremap <silent><leader>b :Clap buffers<CR>
+nnoremap <silent><leader>f :Clap files<CR>
+nnoremap <silent><leader>rg :Clap grep ++query=<cword><CR>
+let g:clap_disable_run_rooter = v:true
+let g:clap_theme = 'material_design_dark'
+let g:clap_preview_direction='UD'
+let g:clap_layout = { 'width': '68%', 'height': '55%', 'row': '13%', 'col': '16%' }
 " }
 
 " coc.nvim {
@@ -230,18 +272,23 @@ augroup highlight_symbol
 augroup END
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
 
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
 " Search workspace symbols
 nnoremap <silent> <leader>l  :CocList<cr>
 nnoremap <silent> <leader>o  :CocList -I symbols<cr>
-nnoremap <silent> <leader>f  :CocList files<cr>
-nnoremap <silent> <leader>rg  :CocList grep<cr>
-nnoremap <silent> <C-space>  :CocList --normal buffers<cr>
+" nnoremap <silent> <leader>f  :CocList files<cr>
+" nnoremap <silent> <leader>rg  :CocList grep<cr>
+" nnoremap <silent> <C-space>  :CocList --normal buffers<cr>
 " Remap keys for gotos
 nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jr <Plug>(coc-references)
@@ -292,4 +339,32 @@ nnoremap <silent><leader><space> :FixWhitespace<cr>
 
 " vim-highlightedyank {
 let g:highlightedyank_highlight_duration = 350
+" }
+
+" vim-buffet {
+let g:buffet_powerline_separators=1
+let g:buffet_show_index=1
+let g:buffet_tab_icon="\uf00a" " 
+let g:buffet_left_trun_icon="\uf0a8" " 
+let g:buffet_right_trun_icon="\uf0a9" " 
+noremap <silent> <leader><Tab> :bn<CR>
+noremap <silent> <S-Tab> :bp<CR>
+noremap <silent> <leader>x :Bw!<CR>
+noremap <silent> <leader>t :enew<CR>
+noremap <silent> <leader>g :b#<CR>
+nmap <leader>1 <Plug>BuffetSwitch(1)
+nmap <leader>2 <Plug>BuffetSwitch(2)
+nmap <leader>3 <Plug>BuffetSwitch(3)
+nmap <leader>4 <Plug>BuffetSwitch(4)
+nmap <leader>5 <Plug>BuffetSwitch(5)
+nmap <leader>6 <Plug>BuffetSwitch(6)
+nmap <leader>7 <Plug>BuffetSwitch(7)
+nmap <leader>8 <Plug>BuffetSwitch(8)
+nmap <leader>9 <Plug>BuffetSwitch(9)
+nmap <leader>0 <Plug>BuffetSwitch(10)
+
+function! g:BuffetSetCustomColors()
+  hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#009900 guifg=#000000
+endfunction
+
 " }
