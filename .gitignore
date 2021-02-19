@@ -1,7 +1,8 @@
 node_modules
 memos.json
 mru
+*.out
 snippets-mru
 commands
 lists
-history.json
+*history.json

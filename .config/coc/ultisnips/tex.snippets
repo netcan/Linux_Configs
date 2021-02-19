@@ -27,8 +27,10 @@
 snippet figure "insert figure" b
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{$2}
-	\caption{$1}
+    % \def\svgwidth{\columnwidth}
+    \import{image/$1/}{$2}
+    \caption{$3}
+    \label{fig:$4}
 \end{figure}
 endsnippet
 
